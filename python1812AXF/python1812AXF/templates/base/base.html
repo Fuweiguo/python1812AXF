@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            爱鲜蜂
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'base/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+    <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.slim.min.js"></script>
+    {% block extcss %}
+
+    {% endblock %}
+
+
+</head>
+<body>
+{#导航#}
+<header>
+    {% block header %}
+        基础
+    {% endblock %}
+</header>
+
+{#主体内容 #}
+{% block content %}
+
+{% endblock %}
+
+
+{#底部#}
+{% block footer %}
+    <footer>
+        <a href="{% url 'axf:home' %}" class="home">
+            <div class="item">
+                <div class="img"><span></span></div>
+                <div class="name">首页</div>
+            </div>
+        </a>
+        <a href="{% url 'axf:markert' %}" class="market">
+            <div class="item">
+                <div class="img"><span></span></div>
+                <div class="name">闪购超市</div>
+            </div>
+        </a>
+        <a href="{% url 'axf:cart' %}" class="cart">
+            <div class="item">
+                <div class="img"><span></span></div>
+                <div class="name">购物车</div>
+            </div>
+        </a>
+        <a href="{% url 'axf:mine' %}" class="mine">
+            <div class="item">
+                <div class="img"><span></span></div>
+                <div class="name">我的</div>
+            </div>
+        </a>
+
+
+    </footer>
+{% endblock %}
+
+
+<script src="{% static 'base/js/base.js' %}"></script>
+{% block extjs %}
+{% endblock %}
+</body>
+</html>

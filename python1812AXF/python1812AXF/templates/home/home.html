@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{#　标题　#}
+{% block title %}
+    首页
+{% endblock %}
+
+
+{#　css　#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+{% endblock %}
+
+
+{# 头部 #}
+{% block header %}
+    首页
+{% endblock %}
+
+
+{#　主体内容　#}
+{% block content %}
+
+{#  轮播图  #}
+    <div id="topSwiper">
+        <div class="swiper-wrapper">
+            <a href="#"></a>
+        </div>
+        <div><img src="#" alt=""></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+{#  导航  #}
+    <div class="nav">
+        <ul>
+            <li>
+                <img src="{% static 'base/img/home1.png' %}" alt="">
+            </li>
+        </ul>
+    </div>
+
+{#  一定买　轮播图部分  #}
+    <div id="mustbuySwiper">
+        {#  关键是swiper的设置，slidesPerView个数  #}
+        <img src="#" alt="">
+    </div>
+
+{#  商品部分  #}
+    <div class="shop">
+        <div class="shophead">
+            <a href=""></a>
+            <img src="" alt="">
+        </div>
+        <div class="shoptab">
+            <a href="">
+                <img src="" alt="">
+            </a>
+        </div>
+        <ul class="shopclass">
+            <li>
+                <a href="">
+                    <img src="" alt="">
+                </a>
+            </li>
+        </ul>
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+{# 底部 #}
+{#{% block footer %}#}
+{#{% endblock %}#}
+
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'home/js/home.js' %}"></script>
+{% endblock %}

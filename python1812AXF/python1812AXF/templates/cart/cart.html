@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{#　标题　#}
+{% block title %}
+    首页
+{% endblock %}
+
+
+{#　css　#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
+
+{# 头部 #}
+{% block header %}
+    购物车
+{% endblock %}
+
+
+{#　主体内容　#}
+{% block content %}
+
+{% endblock %}
+
+
+{# 底部 #}
+{#{% block footer %}#}
+{#{% endblock %}#}
+
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'cart/js/cart.js' %}"></script>
+{% endblock %}
