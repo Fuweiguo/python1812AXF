@@ -21,6 +21,82 @@
 
 {#　主体内容　#}
 {% block content %}
+    <div class="market">
+
+        <div class="type-slider">
+            <ul>
+                {% for foodtype in foodtypes %}
+                    <li>
+                        <a href="#">
+                            {{ foodtype.typename }}
+                        </a>
+                        <span></span>
+                        <div class="active">
+                            <span></span>
+                        </div>
+                    </li>
+
+
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        #顶部通栏
+        <nav>
+            <ul>
+                <li>
+                    <span>
+                        全部类型
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                    </span>
+                </li>
+
+                <li>
+                    <span>
+                        综合排序
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                    </span>
+                </li>
+            </ul>
+        </nav>
+
+        #主体商品列表
+        <div class="main-content">
+            <div class="content-wrapper">
+                <ul>
+                    <li>
+                        <a href="">
+                            <div class="goods-img">
+                                <img src="{{ goods_list.productimg }}" alt="">
+                            </div>
+
+                            <div class="goods-info">
+                                <div class="name"><span>商品名字</span></div>
+                                <div class="detailtag">
+                                    <div class="xf">11</div>
+{#                                    <i>22</i>#}
+                                </div>
+                                <div class="specifics">33</div>
+                                <div class="price">
+                                    <div class="now-price">
+                                        44
+                                        <div class="market-price">55</div>
+                                    </div>
+                                </div>
+                                <div class="bt-wrapper">
+                                    <div class="glyphicon"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}
 

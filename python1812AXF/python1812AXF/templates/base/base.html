@@ -8,6 +8,9 @@
             爱鲜蜂
         {% endblock %}
     </title>
+
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'base/css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.slim.min.js"></script>
@@ -17,13 +20,14 @@
 
 
 </head>
-<body>
+<body class="hidescroll">
 {#导航#}
 <header>
     {% block header %}
         基础
     {% endblock %}
 </header>
+
 
 {#主体内容 #}
 {% block content %}

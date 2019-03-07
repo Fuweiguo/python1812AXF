@@ -1,10 +1,11 @@
-.home{
+.home {
     /*width: 100%;*/
 }
 
 footer .home span {
     background-image: url(/static/base/img/home1.png);
 }
+
 footer .home .name {
     color: #ffd601;
 }
@@ -17,92 +18,109 @@ footer .home .name {
     background: #353d44;
 }
 
-#topSwiper .swiper-wrapper{
+#topSwiper .swiper-wrapper {
     width: 100%;
     height: 100%;
 }
-#topSwiper .swiper-wrapper a{
+
+#topSwiper .swiper-wrapper a {
     display: inline-block;
     width: 100%;
     height: 100%;
 }
-#topSwiper img{
+
+#topSwiper img {
     width: 100%;
     height: 100%;
 }
-#topSwiper .swiper-pagination{
-    bottom: 0px;
+
+#topSwiper .swiper-pagination {
+    bottom: 5px;
 }
 
-
 /* 导航部分*/
-.nav{
+.nav {
     /* 8px*/
     margin: 0.5rem 0;
     background: white;
     /* 10px*/
     padding: 0 0.625rem 0.625rem 0.625rem;
 }
-.nav ul{
+
+.nav ul {
     display: flex;
 }
-.nav ul li{
-    width:25%;
+
+.nav ul li {
+    width: 25%;
     text-align: center;
     /* 11px*/
     font-size: 0.6875rem;
 }
-.nav ul li img{
+
+.nav ul li img {
     width: 100%;
     margin-bottom: 0.625rem;
 }
 
 /* 一定买 轮播图部分*/
-#mustbuySwiper{
+#mustbuySwiper {
     width: 100%;
 }
+
 /* 关键是swiper的设置，slidesPerView个数*/
-#mustbuySwiper img{
-    width:100%;
+#mustbuySwiper img {
+    width: 100%;
 }
 
 /* 商品部分*/
-.shop{
+.shop {
     background: white;
     margin: 0.5rem 0;
 }
-.shop .shophead{
+
+.shop .shophead {
     width: 100%;
 }
-.shop .shophead a{
+
+.shop .shophead a {
     display: inline-block;
 }
-.shop .shophead img{
+
+.shop .shophead img {
     width: 100%;
 }
-.shop .shoptab{
+
+.shop .shoptab {
     width: 100%;
     display: flex;
 }
-.shop .shoptab a{
-    width:50%;
+
+.shop .shoptab a {
+    width: 50%;
 }
+
 .shop .shoptab img {
-    width:100%;
+    width: 100%;
 }
-.shop .shopclass{
+
+.shop .shopclass {
     display: flex;
 }
-.shop .shopclass li{
+
+.shop .shopclass li {
     width: 25%;
 }
-.shop .shopclass li a{
+
+.shop .shopclass li a {
     display: inline-block;
 }
-.shop .shopclass li img{
-    width:100%;
+
+.shop .shopclass li img {
+    width: 100%;
 }
-.shop .shopcommend{
+
+.shop .shopcommend {
     width: 100%;
     display: flex;
     /*
@@ -111,41 +129,47 @@ footer .home .name {
     */
     flex-wrap: wrap;
 }
-.shop .shopcommend li{
-    width:50%;
+
+.shop .shopcommend li {
+    width: 50%;
 }
-.shop .shopcommend li a{
+
+.shop .shopcommend li a {
     display: block;
 }
-.shop .shopcommend li img{
+
+.shop .shopcommend li img {
     width: 100%;
 }
 
-
 /* 主体内容部分呢*/
-.main{
+.main {
 
 }
-.main .main-wrapper{
+
+.main .main-wrapper {
     /* 8px*/
     margin: 0.5rem 0;
     background: white;
 }
-.main .main-wrapper .title{
+
+.main .main-wrapper .title {
     /* 48px*/
     height: 3rem;
     line-height: 3rem;
     text-align: center;
     position: relative;
 }
-.main .main-wrapper .title a{
+
+.main .main-wrapper .title a {
     position: absolute;
     color: gray;
     /* 10px*/
     font-size: 0.625rem;
     right: 0.2rem;
 }
-.main .main-wrapper .title span{
+
+.main .main-wrapper .title span {
     background-color: #ffd601;
     width: 1rem;
     height: 0.2rem;
@@ -155,32 +179,35 @@ footer .home .name {
     bottom: 0.5rem;
 }
 
-
-.main .main-wrapper .headimg img{
+.main .main-wrapper .headimg img {
     width: 100%;
 }
 
-.main .main-wrapper .shoplist{
+.main .main-wrapper .shoplist {
     display: flex;
 }
-.main .main-wrapper .shoplist .shopitem{
+
+.main .main-wrapper .shoplist .shopitem {
     width: 33.3%;
     /* 5px*/
     padding: 0.3125rem;
     position: relative;
 }
-.main .main-wrapper .shoplist .shopitem a{
+
+.main .main-wrapper .shoplist .shopitem a {
     font-size: 0.625rem;
     display: block;
 }
-.main .main-wrapper .shoplist .shopitem .img{
-    width:100%;
+
+.main .main-wrapper .shoplist .shopitem .img {
+    width: 100%;
 }
-.main .main-wrapper .shoplist .shopitem .desc{
+
+.main .main-wrapper .shoplist .shopitem .desc {
     /* 10px*/
     font-size: 0.625rem;
     color: black;
-    width:100%;
+    width: 100%;
     height: 2.4rem;
     line-height: 1.2rem;
     display: -webkit-box;
@@ -189,17 +216,19 @@ footer .home .name {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
-.main .main-wrapper .shoplist .shopitem .price{
+
+.main .main-wrapper .shoplist .shopitem .price {
     color: red;
 }
-.main .main-wrapper .shoplist .shopitem .marketprice{
+
+.main .main-wrapper .shoplist .shopitem .marketprice {
     color: gray;
     /* 8px*/
     font-size: 0.5rem;
     text-decoration: line-through;
 }
 
-.main .main-wrapper .shoplist .shopitem button{
+.main .main-wrapper .shoplist .shopitem button {
     display: inline-block;
     border: 1px solid lightgrey;
     /* 24px*/
@@ -215,6 +244,7 @@ footer .home .name {
     /* 12px*/
     bottom: -0.5rem;
 }
-.main .main-wrapper .shoplist .shopitem button span{
+
+.main .main-wrapper .shoplist .shopitem button span {
 
 }
