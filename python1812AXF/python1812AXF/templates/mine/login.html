@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{#　标题　#}
+{% block title %}
+    首页
+{% endblock %}
+
+
+{#　css　#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
+
+{# 头部 #}
+{% block header %}
+    登录
+{% endblock %}
+
+
+{#　主体内容　#}
+{% block content %}
+    <div class="market">
+        <div class="type-slider"></div>
+    </div>
+
+
+{% endblock %}
+
+
+{# 底部 #}
+{#{% block footer %}#}
+{#{% endblock %}#}
+
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'cart/js/cart.js' %}"></script>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

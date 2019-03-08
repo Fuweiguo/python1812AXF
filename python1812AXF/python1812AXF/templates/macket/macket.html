@@ -32,7 +32,7 @@
                 {% for foodtype in foodtypes %}
                     <li>
                         <span></span>
-                        <a href="{% url 'axf:market' %}">
+                        <a href="{% url 'axf:marketbase' %}">
                             {% if  forloop.counter == foodtype.typesort %}
                                 {{ foodtype.typename }}
                             {% endif %}
@@ -43,17 +43,17 @@
 
         </div>
 
-{#        导航#}
+        {#        导航#}
         <nav>
             <ul>
-                <li>
+                <li id="category-bt">
                     <span>
                         全部类型
                         <i class="glyphicon glyphicon-chevron-up"></i>
                     </span>
                 </li>
 
-                <li>
+                <li id="sort-bt">
                     <span>
                         综合排序
                         <i class="glyphicon glyphicon-chevron-up"></i>
@@ -67,40 +67,41 @@
             <div class="content-wrapper">
                 <ul>
 
-                        {% for goods in goods_list %}
-                            <li>
-                                                                        <a href="#">
+                    {% for goods in goods_list %}
+                        <li>
+                            <a href="#">
                                 <img class="goods-img" src="{{ goods.productimg }}" alt="">
-                            <div class="goods-info">
-                                <p class="name">{{ goods.productlongname }}</p>
-                                <p class="detailtag">
-                                    {% if goods.isxf %}
-                                        <span class="xf">精选</span>
-                                    {% endif %}
-                                    <span>销量{{ goods.productnum }}</span>
-                                </p>
-                                <p class="specifics">{{ goods.specifics }}</p>
-                                <p class="price">
-                                    <span class="now-price">{{ goods.price }}</span>
-                                    <span class="market-price"> {{ goods.marketprice }}</span>
-                                </p>
-                            </div>
-                        </a>
-                            </li>
-                        {% endfor %}
+                                <div class="goods-info">
+                                    <p class="name">{{ goods.productlongname }}</p>
+                                    <p class="detailtag">
+                                        {% if goods.isxf %}
+                                            <span class="xf">精选</span>
+                                        {% endif %}
+                                        <span>销量{{ goods.productnum }}</span>
+                                    </p>
+                                    <p class="specifics">{{ goods.specifics }}</p>
+                                    <p class="price">
+                                        <span class="now-price">{{ goods.price }}</span>
+                                        <span class="market-price"> {{ goods.marketprice }}</span>
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
-            <div class="bounce-view">
+
+            <div class="bounce-view category-view">
                 <div class="bounce-wrapper">
                     {% for childtype in childtype_list %}
-                        <a href="#">{{ childtype.name }}</a>
+                        <a href="{% url 'axf:market' childtype.id %}">{{ childtype.name }}</a>
                     {% endfor %}
                 </div>
             </div>
-            <div class="bounce-view">
+            <div class="bounce-view sort-view">
                 <div class="bounce-wrapper">
-                    <a href="#">综合排序</a>
-                    <a href="#">销量排序</a>
+                    <a href="{% url 'axf:marketbase' %}">综合排序</a>
+                    <a href="">销量排序</a>
                     <a href="#">价格最低</a>
                     <a href="#">价格最高</a>
                 </div>

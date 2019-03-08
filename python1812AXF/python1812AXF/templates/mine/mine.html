@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="{% static 'mine/css/mine.css' %}">
 {% endblock %}
 
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'mine/js/mine.js' %}"></script>
+{% endblock %}
+
 
 {# 头部 #}
 {% block header %}
@@ -21,6 +26,22 @@
 
 {#　主体内容　#}
 {% block content %}
+    <div class="mine">
+        <div class="user-wrapper">
+            <div class="user-img">
+                <img src="" alt="">
+            </div>
+            <div class="user-content">
+                <div class="glyphicon glyphicon-user"></div>
+            </div>
+        </div>
+
+        <div class="collect"></div>
+
+        <div class="ither"></div>
+    </div>
+
+
 
 {% endblock %}
 
@@ -29,7 +50,3 @@
 {#{% block footer %}#}
 {#{% endblock %}#}
 
-{#　ｊｓ　#}
-{% block extjs %}
-    <script src="{% static 'mine/js/mine.js' %}"></script>
-{% endblock %}

@@ -41,17 +41,15 @@ def home(request):
         'mainshows':mainshows,
 
     }
-    print('dddddd')
 
     cache.set('response',response_dir,60)
     response = cache.get('response')
-    print(response)
 
     return render(request,'home/home.html',context=response_dir)
 
 
 #
-def market(request):
+def market(request,childcid=0):
     #分类信息
     foodtypes = Foodtype.objects.all()
 
@@ -62,30 +60,70 @@ def market(request):
     # goods_list = Goods.objects.filter(categoryid=categoryid)
 
 
+
+
     #客户端　需要记录　点击分类下标　【cookie　会自动携带】
     index = int(request.COOKIES.get('index','0'))
-    print(index,'ppppppppppppp')
+
     #根据index 获取　对应的分类
     categoryid = foodtypes[index].typeid
-    #根据　分类ＩＤ　获取对应分类信息
-    goods_list = Goods.objects.filter(categoryid=categoryid)
+    print(index,'>>',childcid)
+
+
+    if childcid:
+        # 根据　分类ＩＤ　获取对应分类信息
+        goods_list = Goods.objects.filter(categoryid=categoryid).filter(childcid=childcid)
+    else:
+        # 根据　分类ＩＤ　获取对应分类信息
+        goods_list = Goods.objects.filter(categoryid=categoryid)
+
+
+
+    # if childid == '0':
+    #     goods_list = Goods.objects.filter(categoryid=categoryid)
+    # else:
+    #     goods_list = Goods.objects.filter(categoryid=categoryid).
+    #
+    #
+    # if sortid == '1':
+    #     pass
+    # elif sortid == '2':
+    #     pass
+    # elif sortldid == '3':
+    #     pass
+
 
     #获取子类信息
     childtypename = foodtypes[index].childtypenames
     #将对应的子类拆分出来
     childtype_list = []
 
+    # suclass_id = int(request.COOKIES.get('subclass'))
+    # print(suclass_id)
+
+
+
     for item in childtypename.split('#'):
         #item >> 全部分类：０
         #item >> 子类名称：　子类ＩＤ
         item_arr = item.split(':')
         temp_dir = {
-            'name':item_arr[0],
-            'id':item_arr[1],
-
+            'name':item_arr[0], #子类名称
+            'id':item_arr[1], #id
         }
 
         childtype_list.append(temp_dir)
+
+    # childcid = childtype_list[0]['id']
+    # print(childcid)
+
+    suclass_goods = Goods.objects.filter(childcid=childcid)
+    print(childcid)
+
+
+
+
+
 
     response_dir = {
         #
@@ -100,6 +138,19 @@ def market(request):
 def cart(request):
     return render(request,'cart/cart.html')
 
+
 #
 def mine(request):
     return render(request,'mine/mine.html')
+
+
+def login(request):
+    return None
+
+
+def logout(request):
+    return None
+
+
+def register(request):
+    return None

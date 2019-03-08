@@ -1,5 +1,5 @@
 $(function () {
-    $('.home').width(innerWidth-20)
+    $('#content').width(innerWidth)
 
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
