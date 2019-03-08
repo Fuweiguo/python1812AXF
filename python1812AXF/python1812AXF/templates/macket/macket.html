@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="{% static 'market/css/market.css' %}">
 {% endblock %}
 
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'market/js/market.js' %}"></script>
+{% endblock %}
 
 {# 头部 #}
 {% block header %}
@@ -27,22 +31,19 @@
             <ul>
                 {% for foodtype in foodtypes %}
                     <li>
-                        <a href="#">
-                            {{ foodtype.typename }}
-                        </a>
                         <span></span>
-                        <div class="active">
-                            <span></span>
-                        </div>
+                        <a href="{% url 'axf:market' %}">
+                            {% if  forloop.counter == foodtype.typesort %}
+                                {{ foodtype.typename }}
+                            {% endif %}
+                        </a>
                     </li>
-
-
                 {% endfor %}
             </ul>
 
         </div>
 
-        #顶部通栏
+{#        导航#}
         <nav>
             <ul>
                 <li>
@@ -65,47 +66,50 @@
         <div class="main-content">
             <div class="content-wrapper">
                 <ul>
-                    <li>
-                        <a href="">
-                            <div class="goods-img">
-                                <img src="{{ goods_list.productimg }}" alt="">
-                            </div>
 
+                        {% for goods in goods_list %}
+                            <li>
+                                                                        <a href="#">
+                                <img class="goods-img" src="{{ goods.productimg }}" alt="">
                             <div class="goods-info">
-                                <div class="name"><span>商品名字</span></div>
-                                <div class="detailtag">
-                                    <div class="xf">11</div>
-{#                                    <i>22</i>#}
-                                </div>
-                                <div class="specifics">33</div>
-                                <div class="price">
-                                    <div class="now-price">
-                                        44
-                                        <div class="market-price">55</div>
-                                    </div>
-                                </div>
-                                <div class="bt-wrapper">
-                                    <div class="glyphicon"></div>
-                                </div>
+                                <p class="name">{{ goods.productlongname }}</p>
+                                <p class="detailtag">
+                                    {% if goods.isxf %}
+                                        <span class="xf">精选</span>
+                                    {% endif %}
+                                    <span>销量{{ goods.productnum }}</span>
+                                </p>
+                                <p class="specifics">{{ goods.specifics }}</p>
+                                <p class="price">
+                                    <span class="now-price">{{ goods.price }}</span>
+                                    <span class="market-price"> {{ goods.marketprice }}</span>
+                                </p>
                             </div>
                         </a>
-
-                    </li>
+                            </li>
+                        {% endfor %}
                 </ul>
             </div>
-
+            <div class="bounce-view">
+                <div class="bounce-wrapper">
+                    {% for childtype in childtype_list %}
+                        <a href="#">{{ childtype.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="bounce-view">
+                <div class="bounce-wrapper">
+                    <a href="#">综合排序</a>
+                    <a href="#">销量排序</a>
+                    <a href="#">价格最低</a>
+                    <a href="#">价格最高</a>
+                </div>
+            </div>
         </div>
-
     </div>
-
 {% endblock %}
 
 
 {# 底部 #}
 {#{% block footer %}#}
 {#{% endblock %}#}
-
-{#　ｊｓ　#}
-{% block extjs %}
-    <script src="{% static 'market/js/market.js' %}"></script>
-{% endblock %}
