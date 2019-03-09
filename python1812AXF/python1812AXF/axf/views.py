@@ -1,5 +1,9 @@
+import hashlib
+import random
+
+import time
 from django.core.cache import cache
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 #
 from axf.models import *
@@ -49,7 +53,8 @@ def home(request):
 
 
 #
-def market(request,childcid=0):
+def market(request,childcid='0',sortid='0'):
+    childcid = str(childcid)
     #分类信息
     foodtypes = Foodtype.objects.all()
 
@@ -67,32 +72,32 @@ def market(request,childcid=0):
 
     #根据index 获取　对应的分类
     categoryid = foodtypes[index].typeid
-    print(index,'>>',childcid)
 
 
-    if childcid:
-        # 根据　分类ＩＤ　获取对应分类信息
-        goods_list = Goods.objects.filter(categoryid=categoryid).filter(childcid=childcid)
-    else:
+    #子分类
+    if childcid == '0':
         # 根据　分类ＩＤ　获取对应分类信息
         goods_list = Goods.objects.filter(categoryid=categoryid)
+        print( 'MMMMM　　进 0　MMMMMMMM',goods_list.count())
+    else:
+        # 根据　分类ＩＤ　获取对应分类信息
+        goods_list = Goods.objects.filter(categoryid=categoryid).filter(childcid=childcid)
+        print( 'MMMMM　　进 1　MMMMMMMM',goods_list.count())
 
 
+        # 排序
+        # 0默认综合排序   1销量排序     2价格最低   3价格最高
 
-    # if childid == '0':
-    #     goods_list = Goods.objects.filter(categoryid=categoryid)
-    # else:
-    #     goods_list = Goods.objects.filter(categoryid=categoryid).
-    #
-    #
-    # if sortid == '1':
-    #     pass
-    # elif sortid == '2':
-    #     pass
-    # elif sortldid == '3':
-    #     pass
+    if sortid == '1':
+        goods_list = goods_list.order_by('-productnum')
 
+    elif sortid == '2':
+        goods_list = goods_list.order_by('price')
 
+    elif sortid == '3':
+        goods_list = goods_list.order_by('-price')
+
+    print('========', 'YYY　出　　YYY',goods_list.count())
     #获取子类信息
     childtypename = foodtypes[index].childtypenames
     #将对应的子类拆分出来
@@ -117,8 +122,8 @@ def market(request,childcid=0):
     # childcid = childtype_list[0]['id']
     # print(childcid)
 
-    suclass_goods = Goods.objects.filter(childcid=childcid)
-    print(childcid)
+    # suclass_goods = Goods.objects.filter(childcid=childcid)
+
 
 
 
@@ -130,6 +135,7 @@ def market(request,childcid=0):
         'foodtypes': foodtypes,
         'goods_list': goods_list,
         'childtype_list':childtype_list,
+        'childcid':childcid,
     }
 
     return render(request,'macket/macket.html',context=response_dir)
@@ -141,16 +147,91 @@ def cart(request):
 
 #
 def mine(request):
-    return render(request,'mine/mine.html')
+
+    token = request.session.get('token')
+
+    user_id = cache.get(token)
+    print(user_id)
+    user = None
+    if user_id:
+        user = User.objects.get(pk = user_id)
+
+    print(user)
+
+    return render(request,'mine/mine.html',context={'user':user})
 
 
 def login(request):
-    return None
+    if request.method == 'GET':
+        return render(request,'mine/login.html')
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = User.objects.filter(email=email)
+        if user:
+            if user.last().password == password:
+                user = user.last()
+                token = random_token()
+
+                cache.set(token,user.id,60*3)
+                request.session['token'] = token
+
+                return redirect('axf:mine')
+            else:
+                return render(request,'mine/login.html',context={
+                    'err_password':'密码错误'
+                })
+
+        else:
+            return render(request ,'mine/login.html',context={'err_email':'邮箱错误'})
+
 
 
 def logout(request):
-    return None
+    request.session.flush()
+
+    return render(request,'mine/mine.html')
+
+def random_token():
+    token = str(random.random()) + str(time.time())
+    md5 = hashlib.md5()
+    md5.update(token.encode('utf-8'))
+    return md5.hexdigest()
+
+
+def random_password():
+    user = str(random.random) + str(time.time())
+    md5 = hashlib.md5()
+    md5.update(user.encode('utf-8'))
+    return md5.hexdigest()
+
 
 
 def register(request):
-    return None
+    if request.method == 'GET':
+        print('aaaaaaaaa')
+        return  render(request,'mine/register.html')
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        name = request.POST.get('name')
+        rank = request.POST.get('rank')
+
+        user = User()
+        user.email = email
+        user.password = password
+        user.name = name
+        # user.img = img
+        # user.rank = rank
+        user.save()
+
+        token = random_token()
+
+        cache.set(token,user.id,60*3)
+
+        request.session['token']=token
+
+        # img = request.POST.get('img')
+        # print(img)
+        return redirect('axf:mine')

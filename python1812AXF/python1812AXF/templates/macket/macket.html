@@ -62,7 +62,7 @@
             </ul>
         </nav>
 
-        #主体商品列表
+{#        主体商品列表#}
         <div class="main-content">
             <div class="content-wrapper">
                 <ul>
@@ -94,16 +94,16 @@
             <div class="bounce-view category-view">
                 <div class="bounce-wrapper">
                     {% for childtype in childtype_list %}
-                        <a href="{% url 'axf:market' childtype.id %}">{{ childtype.name }}</a>
+                        <a href="{% url 'axf:market' childtype.id 1 %}">{{ childtype.name }}</a>
                     {% endfor %}
                 </div>
             </div>
             <div class="bounce-view sort-view">
                 <div class="bounce-wrapper">
-                    <a href="{% url 'axf:marketbase' %}">综合排序</a>
-                    <a href="">销量排序</a>
-                    <a href="#">价格最低</a>
-                    <a href="#">价格最高</a>
+                    <a href="{% url 'axf:market' childcid 0 %}">综合排序</a>
+                    <a href="{% url 'axf:market' childcid 1 %}">销量排序</a>
+                    <a href="{% url 'axf:market' childcid 2 %}">价格最低</a>
+                    <a href="{% url 'axf:market' childcid 3 %}">价格最高</a>
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@
 
 {#　标题　#}
 {% block title %}
-    首页
+    注册页
 {% endblock %}
 
 
@@ -15,28 +15,38 @@
 
 {# 头部 #}
 {% block header %}
-    登录
+    爱鲜蜂
 {% endblock %}
 
 
 {#　主体内容　#}
 {% block content %}
-    <div class="market">
-        <div class="type-slider"></div>
+    <div class="register">
+        <form action="{% url 'axf:login' %}" method="post">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">邮箱</span>
+                <input type="text" class="form-control" placeholder="邮箱" aria-describedby="basic-addon1" name="email">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">密码</span>
+                <input type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1"
+                       name="password"></div>
+            <input type="submit" value='登录'>
+            {% if err_email %}
+                <p><span style="color: red">邮箱错误</span></p>
+            {% elif err_password %}
+                <p><span style="color: red">密码错误</span></p>
+            {% endif %}
+        </form>
     </div>
-
-
 {% endblock %}
 
 
 {# 底部 #}
-{#{% block footer %}#}
-{#{% endblock %}#}
+{% block footer %}
+{% endblock %}
 
 {#　ｊｓ　#}
 {% block extjs %}
     <script src="{% static 'cart/js/cart.js' %}"></script>
-{% endblock %}
-{% block footer %}
-
 {% endblock %}

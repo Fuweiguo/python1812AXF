@@ -12,7 +12,6 @@ $(function () {
     // var $index = localStorage.getItem('index')
     var index = $.cookie('index')
 
-    console.log(index)
     if (index) {
         $('.type-slider li').eq(index).addClass('active')
     } else {
@@ -30,15 +29,15 @@ $(function () {
     })
 
 
+
+    //导航
     var categoryShow = false
     $('#category-bt').click(function () {
         //取反
         categoryShow = !categoryShow
-        console.log('左',categoryShow)
 
         if (sortShow == categoryShow & sortShow==true){
             sortShow = !sortShow
-            console.log('左',categoryShow,'右',sortShow)
             sortViewHide()
         }
         //三木运算
@@ -48,25 +47,22 @@ $(function () {
 
 
     function categoryViewShow() {
-        console.log('左' ,categoryShow)
-        $('.category-view').show()
+        $('.category-view').hide()
+        $('.category-view:first').show()
         $('#category-bt i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
     }
 
     function categoryViewHide() {
-        console.log('hide',categoryShow)
         $('.category-view').hide()
         $('#category-bt i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
     }
 
+
     var sortShow = false
     $('#sort-bt').click(function () {
         sortShow = !sortShow
-        console.log('右',sortShow)
-
         if (sortShow == categoryShow & sortShow==true){
                 categoryShow = !categoryShow
-            console.log('左',categoryShow,'右',sortShow,'pppppp')
             categoryViewHide()
 
         }
@@ -74,14 +70,13 @@ $(function () {
     })
 
     function sortViewShow() {
-        console.log('左',categoryShow,'右',sortShow,'pppppp')
         $('#sort-bt i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
-        $('.bounce-view').show()
+        $('.bounce-view').hide()
+        $('.bounce-view:last').show()
     }
 
 
     function sortViewHide() {
-        console.log('hide',sortShow)
         $('#sort-bt i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
         $('.bounce-view').hide()
     }
@@ -92,11 +87,9 @@ $(function () {
             expires:3 ,path:'/'
         })
         var aaa = $.cookie('subclass')
-        console.log(aaa,'llllllll')
     })
 
     $('.bounce-view').click(function () {
-        console.log('蒙层')
         $(this).hide()
         sortShow = false
         sortViewHide()

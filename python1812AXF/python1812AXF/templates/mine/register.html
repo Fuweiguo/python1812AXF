@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>注册</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{#　标题　#}
+{% block title %}
+    注册页
+{% endblock %}
+
+
+{#　css　#}
+{% block extcss %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
+
+{# 头部 #}
+{% block header %}
+    爱鲜蜂
+{% endblock %}
+
+
+{#　主体内容　#}
+{% block content %}
+    {#    <div class="market">#}
+    {#        <div class="type-slider"></div>#}
+    {#    </div>#}
+
+    {#    <div class="input-group">#}
+    {#  <span class="input-group-addon" id="basic-addon1">@</span>#}
+    {#  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">#}
+
+    <div class="register">
+        <form action="{% url 'axf:register' %}" method="post">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">邮箱</span>
+                <input type="text" class="form-control" placeholder="邮箱" aria-describedby="basic-addon1" name="email">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">密码</span>
+                <input type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1"
+                       name="password"></div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">昵称</span>
+                <input type="text" class="form-control" placeholder="昵称" aria-describedby="basic-addon1" name="name">
+            <input type="file" id="exampleInputFile" name="img">
+            <input type="submit" value="注册">
+        </form>
+    </div>
+
+
+    {#</div>#}
+
+
+{% endblock %}
+
+
+{# 底部 #}
+{% block footer %}
+{% endblock %}
+
+{#　ｊｓ　#}
+{% block extjs %}
+    <script src="{% static 'cart/js/cart.js' %}"></script>
+{% endblock %}
+
