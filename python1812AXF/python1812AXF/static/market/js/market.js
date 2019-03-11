@@ -11,6 +11,7 @@ $(function () {
 
     // var $index = localStorage.getItem('index')
     var index = $.cookie('index')
+    var  ss = $.locals
 
     if (index) {
         $('.type-slider li').eq(index).addClass('active')
@@ -99,4 +100,33 @@ $(function () {
 
     })
 
+
+
+
+
+
+//////////////////////////////////////////////
+    // 影长处理
+    $('.bt-wrapper>.glyphicon-minus').hide()
+    $('.bt-wrapper>i').hide()
+
+    //点击操作
+    $('.bt-wrapper>.glyphicon-plus').click(function () {
+        request_data = {
+            'goodsid':$(this).attr('data-goodsid')
+        }
+        $.get('/axf/addcart/', request_data, function (response) {
+            console.log(response)
+            console.log('000000000000000')
+
+            if (response.status == -1){ // 未登录
+                console.log('1111111111111')
+                // 设置cookie
+                $.cookie('back', 'market', {expires: 3, path: '/'})
+
+                window.open('/axf/login/', '_self')
+            }
+         })
+    })
+//
 })

@@ -21,30 +21,37 @@
 
 {#　主体内容　#}
 {% block content %}
-    {#    <div class="market">#}
-    {#        <div class="type-slider"></div>#}
-    {#    </div>#}
-
-    {#    <div class="input-group">#}
-    {#  <span class="input-group-addon" id="basic-addon1">@</span>#}
-    {#  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">#}
 
     <div class="register">
         <form action="{% url 'axf:register' %}" method="post">
-            <div class="input-group">
+            {#  样式 has-success / has-error     打钩glyphicon-ok / glyphicon-remove     #}
+            <div class="input-group" id="email_v">
                 <span class="input-group-addon" id="basic-addon1">邮箱</span>
-                <input type="text" class="form-control" placeholder="邮箱" aria-describedby="basic-addon1" name="email">
+                <input type="text" class="form-control" placeholder="邮箱" aria-describedby="basic-addon1" name="email" id="example" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="邮箱格式不正确" data-placement="bottom">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
-            <div class="input-group">
+            <br>
+
+
+            <div class="input-group" id="password_v">
                 <span class="input-group-addon" id="basic-addon1">密码</span>
-                <input type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1"
-                       name="password"></div>
-            <div class="input-group">
+                <input type="text" class="form-control" placeholder="密码6--10位字母数字下划线" aria-describedby="basic-addon1" name="password" id="example_1" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="密码格式不正确" data-placement="bottom">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <br>
+
+            <div class="input-group" id="name_v">
                 <span class="input-group-addon" id="basic-addon1">昵称</span>
-                <input type="text" class="form-control" placeholder="昵称" aria-describedby="basic-addon1" name="name">
+                <input type="text" class="form-control" placeholder="昵称" aria-describedby="basic-addon1" name="name"
+                       id="example_2" tabindex="0" role="button" data-toggle="popover"
+                       data-trigger="focus" title="Dismissible popover" data-content="昵称格式不正确" data-placement="bottom">
+                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+            <br>
             <input type="file" id="exampleInputFile" name="img">
-            <input type="submit" value="注册">
         </form>
+        <input type="button" value="注册" id="register_button">
+        <button><a href="{% url 'axf:mine' %}">返回</a></button>
     </div>
 
 
@@ -60,6 +67,7 @@
 
 {#　ｊｓ　#}
 {% block extjs %}
-    <script src="{% static 'cart/js/cart.js' %}"></script>
+    <script src="{% static 'mine/js/registerr.js' %}"></script>
+
 {% endblock %}
 

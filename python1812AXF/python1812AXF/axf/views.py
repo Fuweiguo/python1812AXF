@@ -3,23 +3,26 @@ import random
 
 import time
 from django.core.cache import cache
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 #
+from django.views.decorators.cache import cache_page
+
 from axf.models import *
 
 
+@cache_page(60 * 1, key_prefix="zyz")
 def home(request):
-
-
-
-    print('aaaaaaa')
+    print('@@@@@@@@@@@@@@@@@@@@@@@')
 
     # 轮播图
     wheel = Wheel.objects.all()
-    print('bbbbbbb')
 
     nav = Nav.objects.all()
+
+
+
 
     mustbuy = Mustbuy.objects.all()
 
@@ -30,7 +33,6 @@ def home(request):
     shopclass_list = shops[3:7]
 
     goods = shops[7:11]
-    print('cccccccc')
     mainshows = Mainshow.objects.all()
 
 
@@ -119,15 +121,6 @@ def market(request,childcid='0',sortid='0'):
 
         childtype_list.append(temp_dir)
 
-    # childcid = childtype_list[0]['id']
-    # print(childcid)
-
-    # suclass_goods = Goods.objects.filter(childcid=childcid)
-
-
-
-
-
 
 
     response_dir = {
@@ -170,11 +163,11 @@ def login(request):
 
         user = User.objects.filter(email=email)
         if user:
-            if user.last().password == password:
+            if user.last().password == random_password(password):
                 user = user.last()
                 token = random_token()
 
-                cache.set(token,user.id,60*3)
+                cache.set(token,user.id,60*1)
                 request.session['token'] = token
 
                 return redirect('axf:mine')
@@ -200,10 +193,9 @@ def random_token():
     return md5.hexdigest()
 
 
-def random_password():
-    user = str(random.random) + str(time.time())
+def random_password(password):
     md5 = hashlib.md5()
-    md5.update(user.encode('utf-8'))
+    md5.update(password.encode('utf-8'))
     return md5.hexdigest()
 
 
@@ -218,14 +210,16 @@ def register(request):
         name = request.POST.get('name')
         rank = request.POST.get('rank')
 
+        #储存用户
         user = User()
         user.email = email
-        user.password = password
+        user.password = random_password(password)
         user.name = name
         # user.img = img
         # user.rank = rank
         user.save()
 
+        #状态保持
         token = random_token()
 
         cache.set(token,user.id,60*3)
@@ -235,3 +229,62 @@ def register(request):
         # img = request.POST.get('img')
         # print(img)
         return redirect('axf:mine')
+
+
+#验证账号
+def checkemail(request):
+    email = request.GET.get('email')
+    users = User.objects.filter(email=email)
+    response_data = {}
+    if users:
+        response_data['status'] =1
+        return JsonResponse(response_data)
+    else:
+        response_data['status'] = 0
+        return JsonResponse(response_data)
+
+
+def addcart(request):
+    token = request.session.get('token')
+    print(token,'1111111111')
+
+    #响应数据
+    response_data = {}
+
+    #缓存
+    if token:
+        userid = cache.get(token)
+        print(userid,'22222222')
+        if userid:
+            user = User.objects.get(pk=userid)
+            goodsid = request.GET.get('goodsid')
+            goods = Goods.objects.get(pk=goodsid)
+
+            #判断商品是否存在
+            #不存在　添加新纪录
+            # 存在　修改num
+            carts = Cart.objects.filter(user=user).filter(goods=goods)
+            if carts.exists():
+                cart=carts.last()
+                cart.number = cart.number + 1
+                cart.save()
+            else:
+                cart = Cart()
+                cart.user = user
+                cart.number = 1
+                cart.goods = goods
+                cart.save()
+
+            response_data['status'] = 1
+            response_data['msg'] = '添加{}购物车成功{}'.format(cart.goods.productlongname,cart.number)
+            return  JsonResponse(response_data)
+
+    # 未登录
+    # 因为是ajax操作，所以重定向是不可以的!
+    # return redirect('axf:login')
+
+    response_data['status'] = -1
+    response_data['msg'] = '请登录后操作'
+    print(response_data['status'])
+
+    return JsonResponse(response_data)

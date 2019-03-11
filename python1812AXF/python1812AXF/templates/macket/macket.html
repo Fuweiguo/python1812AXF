@@ -26,7 +26,7 @@
 {#　主体内容　#}
 {% block content %}
     <div class="market">
-
+        {#        #侧边栏#}
         <div class="type-slider">
             <ul>
                 {% for foodtype in foodtypes %}
@@ -62,7 +62,7 @@
             </ul>
         </nav>
 
-{#        主体商品列表#}
+        {#        主体商品列表#}
         <div class="main-content">
             <div class="content-wrapper">
                 <ul>
@@ -86,6 +86,11 @@
                                     </p>
                                 </div>
                             </a>
+                            <div class="bt-wrapper">
+                                <span class="glyphicon glyphicon-minus" data-goodsid="{{ goods.id }}"></span>
+                                <i class="num">10</i>
+                                <span class="glyphicon glyphicon-plus" data-goodsid="{{ goods.id }}"></span>
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
