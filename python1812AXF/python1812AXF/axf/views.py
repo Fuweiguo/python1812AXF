@@ -123,6 +123,8 @@ def market(request,childcid='0',sortid='0'):
 
 
 
+
+
     response_dir = {
         #
         'foodtypes': foodtypes,
@@ -131,11 +133,33 @@ def market(request,childcid='0',sortid='0'):
         'childcid':childcid,
     }
 
+    # 获取登录信息
+    token = request.session.get('token')
+    userid = cache.get(token)
+
+    if userid:
+        user = User.objects.get(pk=userid)
+        carts = user.cart_set.all()
+        response_dir['carts'] = carts
+
     return render(request,'macket/macket.html',context=response_dir)
 
 #
 def cart(request):
-    return render(request,'cart/cart.html')
+    token = request.session.get('token')
+    userid = cache.get(token)
+    if userid:
+        user = User.objects.get(pk=userid)
+        carts = user.cart_set.filter(number__gt=0)
+
+        isall = True
+        for cart in carts:
+            if not cart.isselect:
+                isall = False
+        return render(request,'cart/cart.html',context={'carts':carts,'ilsll':isall})
+
+    else:
+        return render(request,'cart/on-login.html')
 
 
 #
@@ -167,7 +191,7 @@ def login(request):
                 user = user.last()
                 token = random_token()
 
-                cache.set(token,user.id,60*1)
+                cache.set(token,user.id,60*60*24)
                 request.session['token'] = token
 
                 return redirect('axf:mine')
@@ -222,7 +246,7 @@ def register(request):
         #状态保持
         token = random_token()
 
-        cache.set(token,user.id,60*3)
+        cache.set(token,user.id,60*60*24)
 
         request.session['token']=token
 
@@ -276,6 +300,7 @@ def addcart(request):
                 cart.save()
 
             response_data['status'] = 1
+            response_data['number'] = cart.number
             response_data['msg'] = '添加{}购物车成功{}'.format(cart.goods.productlongname,cart.number)
             return  JsonResponse(response_data)
 
@@ -288,3 +313,83 @@ def addcart(request):
     print(response_data['status'])
 
     return JsonResponse(response_data)
+
+
+def subcart(request):
+    print('fffffff')
+    goodsid = request.GET.get('goodsid')
+    goods = Goods.objects.get(pk=goodsid)
+
+    # 用户
+    token = request.session.get('token')
+    userid = cache.get(token)
+    print('userid',userid,)
+    user = User.objects.get(pk=userid)
+
+    #获取商品购物车信息
+    cart = Cart.objects.filter(user=user).filter(goods=goods).first()
+    cart.number = cart.number - 1
+    cart.save()
+
+    print(goodsid)
+    response_data = {
+        'msg':'删减商品成功',
+        'status':1,
+        'number':cart.number,
+
+    }
+    return JsonResponse(response_data)
+
+
+def changecarrtselect(request):
+    cartid = request.GET.get('cartid')
+    print(cartid)
+
+    cart = Cart.objects.get(pk=cartid)
+    cart.isselect = not cart.isselect
+    cart.save()
+
+
+    response_data = {
+        'msg':'状态修改成功',
+        'status':1,
+        'isselect':cart.isselect
+    }
+
+
+    return JsonResponse(response_data)
+
+
+def changecartall(request):
+    status = request.GET.get('status')
+    token = request.session.get('token')
+    userid = cache.get(token)
+    user = User.objects.get(pk=userid)
+    carts = user.cart_set.all()
+    if status == 'true':
+        for cart in carts:
+            cart.isselect = True
+            cart.save()
+    else:
+        for cart in carts:
+            cart.isselect = False
+            cart.save()
+
+    response_data = {
+        'msg':'全选修改成功',
+        'status':1,
+        'isselect':carts.last().isselect,
+    }
+
+    return JsonResponse(response_data)
+
+
+def generate_order():
+    temp = time.time()+random.randint(100000000,1000000000)
+    print()
+    pass
+
+
+def generateorder(request):
+    order = generate_order()
+    return None

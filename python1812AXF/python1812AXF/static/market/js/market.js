@@ -107,14 +107,28 @@ $(function () {
 
 //////////////////////////////////////////////
     // 影长处理
-    $('.bt-wrapper>.glyphicon-minus').hide()
-    $('.bt-wrapper>i').hide()
+    // $('.bt-wrapper>.glyphicon-minus').hide()
+    // $('.bt-wrapper>i').hide()
+
+    $('.bt-wrapper .num').each(function () {
+        var num = parseInt($(this).html())
+        if (num){  //有数值
+            $(this).prev().show()
+            $(this).show()
+        }else {　　//没数值
+            $(this).prev().hide()
+            $(this).hide()
+        }
+    })
 
     //点击操作
     $('.bt-wrapper>.glyphicon-plus').click(function () {
         request_data = {
             'goodsid':$(this).attr('data-goodsid')
         }
+
+        var $that = $(this)
+
         $.get('/axf/addcart/', request_data, function (response) {
             console.log(response)
             console.log('000000000000000')
@@ -125,8 +139,42 @@ $(function () {
                 $.cookie('back', 'market', {expires: 3, path: '/'})
 
                 window.open('/axf/login/', '_self')
+            }else if (response.status == 1){
+
+                console.log('hhhhh')
+                //兄弟节点
+                //this 哪个函数调用　指向　谁
+
+                $that.prev().html(response.number)
+
+                //设置显示
+                $that.prev().show()
+                console.log('7777777',$that.prev())
+                $that.prev().prev().show()
             }
          })
     })
-//
+
+    //减操作
+    $('.bt-wrapper>.glyphicon-minus').click(function () {
+
+        var $that = $(this)
+
+        request_data = {
+            'goodsid':$(this).attr('data-goodsid')
+        }
+
+        $.get('/axf/subcart/',request_data,function (response) {
+            console.log(response)
+
+            if (response.status == 1){
+                if (response.number){
+                    $that.next().html(response.number)
+                }else {
+                    $that.next().hide()
+                    $that.hide()
+                }
+            }
+        })
+    })
 })

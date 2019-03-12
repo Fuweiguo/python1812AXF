@@ -21,8 +21,50 @@
 
 {#　主体内容　#}
 {% block content %}
-    <div class="market">
-        <div class="type-slider"></div>
+    <div class="cart">
+        <ul>
+            {% for cart in carts %}
+                <li>
+                    <div class="confirm-wrapper" data-cardid="{{ cart.id }}">
+                        {% if cart.isselect %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="no"></span>
+                        {% endif %}
+                    </div>
+
+                    <div class="content-wrapper">
+                        <div class="img">
+                            <img src="{{ cart.goods.productimg }}" alt="">
+                        </div>
+                        <div class="detail">
+                            <p class="name">{{ cart.goods.productlongname }}</p>
+                            <p class="price" data-price="{{ cart.goods.price }}">{{ cart.goods.price }}</p>
+                            <p class="num" data-number="{{ cart.number }}">X{{ cart.number }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+        <div class="bill">
+            <div class="bill-left">
+                <div class="all" isall="false">
+                    <span class="no"></span>
+                    <b>全选</b>
+                </div>
+                <div class="total">
+                    <span>￥</span>
+                    <b></b>
+
+                </div>
+            </div>
+
+            <div class="bill-right">
+                下单
+            </div>
+        </div>
     </div>
 
 
