@@ -1,7 +1,6 @@
 from django.db import models
 
-
-#基础类
+# 基础类
 class BaseModel(models.Model):
     img = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
@@ -11,18 +10,18 @@ class BaseModel(models.Model):
         abstract = True
 
 
-#轮播图
+
 class Wheel(BaseModel):
     class Meta:
         db_table = 'axf_wheel'
 
 
-#导航　模型类
+
 class Nav(BaseModel):
     class Meta:
         db_table = 'axf_nav'
 
-#每日必购
+
 class Mustbuy(BaseModel):
     class Meta:
         db_table = 'axf_mustbuy'
@@ -33,10 +32,7 @@ class Shop(BaseModel):
         db_table = 'axf_shop'
 
 
-# (trackid,name,img,categoryid,brandname,
-# img1,childcid1,productid1,longname1,price1,marketprice1,img2,childcid2,productid2,longname2,price2,marketprice2,img3,childcid3,productid3,longname3,price3,marketprice3)
-
-#商品列表　　模型类
+# 主页显示
 class Mainshow(models.Model):
     trackid = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
@@ -64,10 +60,11 @@ class Mainshow(models.Model):
     longname3 = models.CharField(max_length=100)
     price3 = models.CharField(max_length=10)
     marketprice3 = models.CharField(max_length=10)
-# axf_foodtypes
-#     typeid,typename,childtypenames,typesort)
+
+
+# 商品　分类
 class Foodtype(models.Model):
-    #分类ｉｄ
+
     typeid = models.CharField(max_length=10)
 
     typename = models.CharField(max_length=100)
@@ -80,77 +77,114 @@ class Foodtype(models.Model):
         db_table = 'axf_foodtypes'
 
 
-# (productid,productimg,productname,productlongname,isxf,pmdesc,specifics,price,marketprice,categoryid,childcid,childcidname,dealerid,storenums,productnum)
 
-# "11951","http://img01.bqstatic.com/upload/goods/000/001/1951/0000011951_63930.jpg@200w_200h_90Q","","乐吧薯片鲜虾味50.0g",0,0,"50g",2.00,2.500000,103541,103543,"膨化食品","4858",200,4)
-
+#商品模型　类
 class Goods(models.Model):
-    # 商品ID
+
     productid = models.CharField(max_length=10)
-    # 商品图片
+
     productimg = models.CharField(max_length=100)
-    # 商品名称
+
     productname = models.CharField(max_length=100)
-    # 商品长名称
+
     productlongname = models.CharField(max_length=200)
-    # 是否精选
     isxf = models.IntegerField(default=0)
-    # 是否买一送一
+
     pmdesc = models.IntegerField(default=0)
-    # 规格
+
     specifics = models.CharField(max_length=100)
-    # 价格
+
     price = models.DecimalField(max_digits=8, decimal_places=2)
-    # 超市价格
+
     marketprice = models.DecimalField(max_digits=8, decimal_places=2)
-    # 分类ID
+    #
     categoryid = models.IntegerField()
-    # 子类ID
+    #
     childcid = models.IntegerField()
-    # 子类名称
+    #
     childcidname = models.CharField(max_length=100)
-    # 详情ID
+    #
     dealerid = models.CharField(max_length=100)
-    # 库存
+    #
     storenums = models.IntegerField()
-    # 销量
+    #
     productnum = models.IntegerField()
 
     class Meta:
         db_table = 'axf_goods'
 
-
+# 用户模型类
 class User(models.Model):
-    #邮箱
+    #
     email = models.CharField(max_length=40,unique=True)
-    #密码
+    #
     password = models.CharField(max_length=256)
-    #昵称
+    #
     name = models.CharField(max_length=100)
-    #头像　
+    #　
     img = models.CharField(max_length=40,default='axf.png')
-    #等级
+    #
     rank = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'axf_user'
 
-# 购物车 模型类
+#　购物车模型　类
 class Cart(models.Model):
-    # 用户 [添加的这个商品属于哪个用户]
+
     user = models.ForeignKey(User)
 
-    # 商品 [添加的是哪个商品]
+
     goods = models.ForeignKey(Goods)
 
-    ## 具体规格 [颜色、内存、版本、大小.....]
-    # 商品数量
+    #
     number = models.IntegerField()
 
-    # 是否选中
+
     isselect = models.BooleanField(default=True)
-    # 是否删除
+
     isdelete = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'axf_cart'
+
+
+
+# 订单 模型类
+# 一个用户 对应 多个订单
+class Order(models.Model):
+    # 用户
+    user = models.ForeignKey(User)
+    # 创建时间
+    createtime = models.DateTimeField(auto_now_add=True)
+    # 更新时间
+    updatetime = models.DateTimeField(auto_now=True)
+    # 状态
+    # -1 过期
+    # 0 未付款
+    # 1 已付款，待发货
+    # 2 已发货，待收货
+    # 3 已收货，待评价
+    # 4 已评价
+    status = models.IntegerField(default=0)
+    # 订单号
+    identifier = models.CharField(max_length=256)
+
+    class Meta:
+        db_table = 'axf_order'
+
+
+
+# 订单商品 模型类
+# 一个订单 对应 多个商品(订单商品)
+class OrderGoods(models.Model):
+    # 订单
+    order = models.ForeignKey(Order)
+    # 商品
+    goods = models.ForeignKey(Goods)
+
+    ## 商品选择规格
+    number = models.IntegerField()
+
+    class Meta:
+        db_table = 'axf_ordergoods'

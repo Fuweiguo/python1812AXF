@@ -104,4 +104,5 @@ $(function () {
         console.log(total_num, 'iiiiiiii')
         total_num = 0
     }
+
 })
